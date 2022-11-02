@@ -1,11 +1,12 @@
 Streak[] test = new Streak[450];
 void setup() {
   size(400,400);
-  for(int i = 0; i < test.length; i++) {
-    if (i < 300)
-      test[i] = new Streak();
-    else if (i < test.length - 2)
+  int len = test.length;
+  for(int i = 0; i < len; i++) {
+    if (i < len - 301)
       test[i] = new Particle();
+    else if (i < test.length - 2)
+      test[i] = new Streak();
     else 
       test[test.length - 2] = new Spark(false);
       test[test.length - 1] = new Spark(true);
@@ -14,7 +15,6 @@ void setup() {
 
 void draw() {
   background(0);
-  stroke(255);
   for(int i = 0; i < test.length; i++) {
     test[i].move();
     test[i].show();
@@ -43,6 +43,7 @@ class Streak {
     maxLen = (float)(Math.random()*55)+40;
   }
   void show() {
+   stroke(255);
    line(pX, pY, x2, y2);
   }
   
@@ -86,7 +87,8 @@ class Particle extends Streak {
   
   void show() {
     stroke(r, g, b);
-    line(pX, pY, pX + (float)Math.cos(angle)*3, pY + (float)Math.sin(angle)*3);
+    if(dist(pX, pY, 200, 200) > 40)
+      line(pX, pY, pX + (float)Math.cos(angle)*3, pY + (float)Math.sin(angle)*3);
   }
   
 } // end of Particle class
